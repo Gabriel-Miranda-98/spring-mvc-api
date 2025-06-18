@@ -1,0 +1,30 @@
+services:
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: spring
+      POSTGRES_PASSWORD: spring
+      POSTGRES_DB: spring-api-db
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    networks:
+      - backend
+
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    environment:
+      PGADMIN_DEFAULT_EMAIL: teste@teste.com
+      PGADMIN_DEFAULT_PASSWORD: spring
+    ports:
+      - "5050:80"
+    depends_on:
+      - db
+    networks:
+      - backend
+volumes:
+  db_data:
+networks:
+  backend:
+    driver: bridge
