@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import br.gabriel.api.spring_mvc_api.dto.ClienteDto;
 import br.gabriel.api.spring_mvc_api.service.ClienteService;
@@ -57,6 +58,25 @@ public class ClienteController {
         Optional<ClienteDto> cliente = clienteService.buscarPorId(id);
         return cliente.map(ResponseEntity::ok)
                      .orElse(ResponseEntity.notFound().build());
+    }
+
+    @GetMapping("/buscar")
+    @Operation(summary = "Buscar clientes por nome", description = "Retorna uma lista de clientes que contêm o nome informado")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Lista de clientes encontrados",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ClienteDto.class))),
+        @ApiResponse(responseCode = "400", description = "Parâmetro de busca inválido",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = br.gabriel.api.spring_mvc_api.dto.ErrorResponseDto.class)))
+    })
+    public ResponseEntity<List<ClienteDto>> buscarPorNome(
+            @Parameter(description = "Nome ou parte do nome do cliente para busca", required = true, example = "João")
+            @RequestParam String nome) {
+        if (nome == null || nome.trim().isEmpty()) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        List<ClienteDto> clientes = clienteService.buscarPorNome(nome.trim());
+        return ResponseEntity.ok(clientes);
     }
 
     @PostMapping

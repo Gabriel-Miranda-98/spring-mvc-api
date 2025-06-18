@@ -27,6 +27,13 @@ public class ClienteService {
                 .map(this::convertToDto);
     }
 
+    public List<ClienteDto> buscarPorNome(String nome) {
+        return clienteRepository.findByNameContainingIgnoreCase(nome)
+                .stream()
+                .map(this::convertToDto)
+                .collect(Collectors.toList());
+    }
+
     public ClienteDto salvar(ClienteDto clienteDto) {
         Cliente cliente = convertToEntity(clienteDto);
         Cliente clienteSalvo = clienteRepository.save(cliente);
@@ -61,6 +68,7 @@ public class ClienteService {
         dto.setNome(cliente.getName());
         dto.setEmail(cliente.getEmail());
         dto.setTelefone(cliente.getPhone());
+        dto.setEndereco(cliente.getAddress());
         return dto;
     }
 
