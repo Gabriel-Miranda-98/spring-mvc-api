@@ -4,75 +4,40 @@ import java.util.UUID;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity(name = "clientes")
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Cliente {
 
   @Id
   @GeneratedValue(strategy = jakarta.persistence.GenerationType.UUID)
   private UUID id;
-  private String nome;
+
+  private String name;
+
   private String email;
-  private String telefone;
-  private String endereco;
-  private String cpf;
 
-  protected Cliente() {
-  }
+  private String phone;
+  private String address;
 
-  public Cliente(String nome, String email, String telefone, String endereco, String cpf) {
-    this.nome = nome;
-    this.email = email;
-    this.telefone = telefone;
-    this.endereco = endereco;
-    this.cpf = cpf;
-  }
-  public UUID getId() {
-    return id;
-  }
-  public void setId(UUID id) {
-    this.id = id;
-  }
-  public String getNome() {
-    return nome;
-  }
-  public void setNome(String nome) {
-    this.nome = nome;
-  }
-  public String getEmail() {
-    return email;
-  }
-  public void setEmail(String email) {
-    this.email = email;
-  }
-  public String getTelefone() {
-    return telefone;
-  }
-  public void setTelefone(String telefone) {
-    this.telefone = telefone;
-  }
-  public String getEndereco() {
-    return endereco;
-  }
-  public void setEndereco(String endereco) {
-    this.endereco = endereco;
-  }
-  public String getCpf() {
-    return cpf;
-  }
-  public void setCpf(String cpf) {
-    this.cpf = cpf;
-  }
+
+
   @Override
   public String toString() {
     return "Cliente{" +
-            "id=" + id +
-            ", nome='" + nome + '\'' +
-            ", email='" + email + '\'' +
-            ", telefone='" + telefone + '\'' +
-            ", endereco='" + endereco + '\'' +
-            ", cpf='" + cpf + '\'' +
-            '}';
+        "id=" + id +
+        ", name='" + name + '\'' +
+        ", email='" + email + '\'' +
+        ", phone='" + phone + '\'' +
+        ", address='" + address + '\'' +
+        '}';
   }
   @Override
   public boolean equals(Object o) {
@@ -87,44 +52,6 @@ public class Cliente {
   public int hashCode() {
     return id != null ? id.hashCode() : 0;
   }
-  public static ClienteBuilder builder() {
-    return new ClienteBuilder();
-  }
-  public static class ClienteBuilder {
-    private String nome;
-    private String email;
-    private String telefone;
-    private String endereco;
-    private String cpf;
 
-    public ClienteBuilder nome(String nome) {
-      this.nome = nome;
-      return this;
-    }
-
-    public ClienteBuilder email(String email) {
-      this.email = email;
-      return this;
-    }
-
-    public ClienteBuilder telefone(String telefone) {
-      this.telefone = telefone;
-      return this;
-    }
-
-    public ClienteBuilder endereco(String endereco) {
-      this.endereco = endereco;
-      return this;
-    }
-
-    public ClienteBuilder cpf(String cpf) {
-      this.cpf = cpf;
-      return this;
-    }
-
-    public Cliente build() {
-      return new Cliente(nome, email, telefone, endereco, cpf);
-    }
-  }
 
 }
