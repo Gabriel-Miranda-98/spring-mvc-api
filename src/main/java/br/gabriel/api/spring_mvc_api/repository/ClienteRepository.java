@@ -11,7 +11,5 @@ import br.gabriel.api.spring_mvc_api.model.Cliente;
 @Repository
 public interface ClienteRepository extends JpaRepository<Cliente, UUID> {
     Optional<Cliente> findByName(String name);
-    @Override
-    long count();
 
 }
