@@ -12,9 +12,11 @@ import br.gabriel.api.spring_mvc_api.repository.ClienteRepository;
 @Service
 public class ClienteService {
 
-    @Autowired
-    private ClienteRepository clienteRepository;
+    private final ClienteRepository clienteRepository;
 
+    public ClienteService(ClienteRepository clienteRepository) {
+        this.clienteRepository = clienteRepository;
+    }
     public List<ClienteDto> listarTodos() {
         return clienteRepository.findAll()
                 .stream()
