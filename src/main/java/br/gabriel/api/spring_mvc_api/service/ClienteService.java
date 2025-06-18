@@ -44,6 +44,10 @@ public class ClienteService {
         return convertToDto(clienteAtualizado);
     }
 
+    public Long contar() {
+        return clienteRepository.count();
+    }
+
     public void deletar(UUID id) {
         if (!clienteRepository.existsById(id)) {
             throw new RuntimeException("Cliente não encontrado com ID: " + id);
