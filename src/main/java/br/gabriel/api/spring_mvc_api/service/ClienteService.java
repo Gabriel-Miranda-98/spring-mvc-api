@@ -27,6 +27,12 @@ public class ClienteService {
   }
 
   public Cliente save(Cliente cliente) {
+    if(cliente.getEmail() != null && clienteRepository.existsByEmail(cliente.getEmail())) {
+      throw new RuntimeException("Email já cadastrado");
+    }
+
+
+
     return clienteRepository.save(cliente);
   }
 
